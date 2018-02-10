@@ -30,3 +30,5 @@ console.log(copy2);
 
 const copy3 = JSON.parse(json);
 console.log(copy3);
+console.log('buf1: ' + buf1);
+console.log('buf1.toString: ' + buf1.toString());
