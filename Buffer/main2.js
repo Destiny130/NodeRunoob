@@ -13,22 +13,23 @@ console.log('json[\'data\']: ' + json['data']); //undefined
 console.log('jsontest[\'data\']: ' + jsontest['data']); //Buffer
 
 const copy = JSON.parse(json, (key, value) => {
-    console.log('key: ' + key + ', value: ' + value + ', value.type: ' + value.type + ', value.data: ' + value.data);
-    if (value && value.type === 'Buffer') console.log(Buffer.from(value.data));
+    //console.log('key: ' + key + ', value: ' + value + ', value.type: ' + value.type + ', value.data: ' + value.data);
+    //if (value && value.type === 'Buffer') console.log(Buffer.from(value.data));
     return value && value.type === 'Buffer' ? Buffer.from(value.data) : value;
 });
 console.log(copy);
 
 var test = function(key, value) {
-    console.log('key: ' + key + ', value: ' + value);
+    //console.log('key: ' + key + ', value: ' + value);
     return value && value.type === 'Buffer' ? Buffer.from(value.data) : value;
 }
 const copy2 = JSON.parse(json, function(key, value) {
-    test(key, value);
+    //return value && value.type === 'Buffer' ? Buffer.from(value.data) : value;
+    return test(key, value);
 });
 console.log(copy2);
 
-const copy3 = JSON.parse(json);
-console.log(copy3);
-console.log('buf1: ' + buf1);
-console.log('buf1.toString: ' + buf1.toString());
+// const copy3 = JSON.parse(json);
+// console.log(copy3);
+// console.log('buf1: ' + buf1);
+// console.log('buf1.toString: ' + buf1.toString('hex'));
