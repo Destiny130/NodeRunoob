@@ -22,4 +22,5 @@ objBase.sayHello();
 console.log(objBase);
 var objSub = new Sub();
 objSub.showName();
+// objSub.sayHello();
 console.log(objSub);
