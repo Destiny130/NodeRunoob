@@ -1,2 +1,1 @@
-Content in input.txt
-Create for read.
+Content to
