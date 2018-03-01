@@ -1,9 +1,10 @@
-var express = require('express'),
-    fs = require('fs');
+var express = require('express');
 var app = express();
+var fs = require('fs');
+var path = require('path');
 
 app.get('/listUsers', function(req, res) {
-    fs.readFile(__dirname + '/' + 'users.json', 'utf8', function(err, data) {
+    fs.readFile(path.join(__dirname, 'users.json'), 'utf8', function(err, data) {
         console.log(data);
         res.end(data);
     });
@@ -19,7 +20,7 @@ var user = {
 }
 
 app.get('/addUser', function(req, res) {
-    fs.readFile(__dirname + '/' + 'users.json', 'utf8', function(err, data) {
+    fs.readFile(path.join(__dirname, 'users.json'), 'utf8', function(err, data) {
         if (err) {
             return console.error(err);
         }
@@ -30,8 +31,18 @@ app.get('/addUser', function(req, res) {
     });
 });
 
+app.get('/deleteUser', function(req, res) {
+    fs.readFile(path.join(__dirname, 'users.json'), 'utf8', function(err, data) {
+        if (err) { return console.error('error: ' + err); }
+        console.log(data);
+        data = JSON.parse(data);
+        delete data["user" + 2];
+        res.end(JSON.stringify(data));
+    });
+});
+
 app.get('/:id', function(req, res) {
-    fs.readFile(__dirname + '/' + 'users.json', 'utf8', function(err, data) {
+    fs.readFile(path.join(__dirname, 'users.json'), 'utf8', function(err, data) {
         if (err) return console.error(err);
         data = JSON.parse(data);
         var user = data['user' + req.params.id];
@@ -40,21 +51,9 @@ app.get('/:id', function(req, res) {
     });
 });
 
-app.get('/deleteUser', function(req, res) {
-    fs.readFile(__dirname + '/' + 'users.json', 'utf8', function(err, data) {
-        if (err) return console.error('error: ' + err);
-        // console.log(__dirname);
-        data = JSON.parse(data);
-        // console.log('before delete. data: ' + data);
-        delete data["user" + 2];
-        // console.log('after delete. data: ' + data);
-        res.end(JSON.stringify(data));
-    })
-})
-
 var server = app.listen(8081, function() {
     var host = server.address().address;
     var port = server.address().port;
-    console.log('Application instance. Address is httl://%s:%s', host, port);
+    console.log('Application instance. Address is http://%s:%s', host, port);
     // console.log('dirname: ' + __dirname);
 });
